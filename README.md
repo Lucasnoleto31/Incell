@@ -15,7 +15,19 @@ Este repositório vai concentrar o software da Incell: controle de ordens de ser
 
 ## Status
 
-O chat de atendimento (abaixo) é o primeiro módulo, em implantação em outubro de 2026. Ordens de serviço, estoque e vendas vêm depois.
+O chat de atendimento é o primeiro módulo, em implantação em outubro de 2026. A **Loja** (ordens de serviço, estoque e vendas) tem a estrutura inicial pronta no código e na migração `0070`, à espera de aplicação no banco e de uso real.
+
+## Loja (ordens de serviço, estoque e vendas)
+
+A área **Loja** do menu (`/loja`) reúne os três módulos da assistência, no mesmo desenho da Administração (índice com o estado do dia e uma subpágina por módulo):
+
+- **Ordens de serviço** (`/loja/ordens`): abrir a OS para um contato do chat (o cliente é o mesmo cadastro da conversa), aparelho, IMEI, defeito relatado, diagnóstico, técnico, prazo, garantia e orçamento. A ficha muda o status (aberta → em análise → aguardando aprovação → em reparo → pronta → entregue, com aguardando peça e cancelada), lança peças e serviços e guarda a linha do tempo com as notas da equipe. Peça do estoque dá baixa ao entrar na OS e volta ao sair.
+- **Estoque** (`/loja/estoque`): aparelhos (um por item, com IMEI e condição), peças e acessórios, com custo, preço, estoque mínimo e SKU. O saldo só muda por movimento (entrada, saída, ajuste por contagem, baixa de venda ou OS); a ficha mostra o histórico e liga ao que consumiu.
+- **Vendas** (`/loja/vendas`): venda de balcão com itens do estoque ou avulsos, cliente opcional, forma de pagamento, parcelas e desconto. Concluir dá baixa no estoque; cancelar uma concluída devolve (só a gestão).
+
+Regras de acesso (migração `supabase/migrations/0070_loja_os_estoque_vendas.sql`): toda a equipe lê e grava, só a gestão apaga, o compliance só lê; cada mudança vai ao Log de acesso. O código está em `src/app/(app)/loja/` e o vocabulário (status, rótulos, dinheiro em centavos) em `src/lib/loja.ts`.
+
+**Para usar:** aplique a `0070` no SQL Editor do Supabase (depois das anteriores), suba o código e abra a Loja pelo menu. Ainda não foi testada com banco real: o primeiro uso pede um passeio por abrir OS, lançar peça, registrar venda e conferir o saldo.
 
 ## Atendimento (chat)
 

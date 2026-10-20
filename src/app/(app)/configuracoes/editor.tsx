@@ -91,7 +91,7 @@ function assinarAviso(ouvinte: () => void) {
  * existe sempre (o leitor de tela só anuncia mudança em região que já estava
  * lá); o texto some sozinho depois de alguns segundos.
  */
-function AvisoFlutuante() {
+export function AvisoFlutuante() {
   const aviso = useSyncExternalStore(
     assinarAviso,
     () => avisoAtual,

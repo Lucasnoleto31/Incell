@@ -54,8 +54,35 @@ const LOG: DestinoPaleta = {
   sinonimos: "auditoria log acessos quem viu exportou registro",
 };
 
+/** Os atalhos da Loja: quem grava abre o cadastro direto pela paleta. */
+const LOJA: DestinoPaleta[] = [
+  {
+    id: "destino-loja-os-nova",
+    rotulo: "Nova ordem de serviço",
+    grupo: "Loja",
+    href: "/loja/ordens/nova",
+    sinonimos: "os ordem servico conserto reparo bancada abrir nova",
+  },
+  {
+    id: "destino-loja-item-novo",
+    rotulo: "Novo item no estoque",
+    grupo: "Loja",
+    href: "/loja/estoque/novo",
+    sinonimos: "estoque item peca aparelho iphone acessorio cadastrar",
+  },
+  {
+    id: "destino-loja-venda-nova",
+    rotulo: "Nova venda",
+    grupo: "Loja",
+    href: "/loja/vendas/nova",
+    sinonimos: "venda vender balcao pdv registrar",
+  },
+];
+
 export function destinosDoPapel(papel: Papel): DestinoPaleta[] {
   const destinos: DestinoPaleta[] = [];
+
+  if (papel !== "compliance") destinos.push(...LOJA);
 
   if (ehGestao(papel)) {
     destinos.push(

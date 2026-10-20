@@ -16,6 +16,7 @@ import {
   PanelLeftOpen,
   Search,
   Settings,
+  Store,
   Users,
   X,
   type LucideIcon,
@@ -85,6 +86,15 @@ type Modulo = {
 export const MODULOS: Modulo[] = [
   { href: "/chat", label: "Chat", icon: MessageSquare, principal: true },
   { href: "/contatos", label: "Contatos", icon: Users, principal: true },
+  {
+    // A Loja da Incell: ordens de serviço, estoque e vendas (índice em
+    // /loja, cada módulo numa subpágina). Toda a equipe vê; o compliance só
+    // lê, como no resto.
+    href: "/loja",
+    label: "Loja",
+    icon: Store,
+    principal: true,
+  },
   {
     href: "/campanhas",
     label: "Disparos",

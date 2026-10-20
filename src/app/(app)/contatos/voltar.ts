@@ -21,6 +21,7 @@ const TELAS = [
   "/relatorios",
   "/admin",
   "/configuracoes",
+  "/loja",
 ];
 
 /**
@@ -143,5 +144,18 @@ export function rotuloVoltar(destino: string): string {
   if (caminho.startsWith("/admin/acessos")) return "Log de acesso";
   if (caminho.startsWith("/admin")) return "Administração";
   if (caminho.startsWith("/configuracoes")) return "Configurações";
+  if (/^\/loja\/ordens\/[^/]+/.test(caminho) && !caminho.startsWith("/loja/ordens/nova")) {
+    return "Ordem de serviço";
+  }
+  if (caminho.startsWith("/loja/ordens")) return "Ordens de serviço";
+  if (/^\/loja\/estoque\/[^/]+/.test(caminho) && !caminho.startsWith("/loja/estoque/novo")) {
+    return "Item do estoque";
+  }
+  if (caminho.startsWith("/loja/estoque")) return "Estoque";
+  if (/^\/loja\/vendas\/[^/]+/.test(caminho) && !caminho.startsWith("/loja/vendas/nova")) {
+    return "Venda";
+  }
+  if (caminho.startsWith("/loja/vendas")) return "Vendas";
+  if (caminho.startsWith("/loja")) return "Loja";
   return "Voltar";
 }

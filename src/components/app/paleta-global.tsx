@@ -50,7 +50,7 @@ export type AreaPaleta = {
 export type DestinoPaleta = {
   id: string;
   rotulo: string;
-  grupo: "Administração" | "Conta";
+  grupo: "Administração" | "Conta" | "Loja";
   href: string;
   /** A chave do editor que ele abre: a tela que já tem esse editor mostra
    *  o comando dela, e o destino some. */

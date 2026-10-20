@@ -59,7 +59,8 @@ o primeiro deixa a Caixa vazia (o PostgREST recusa a coluna que não existe).
 
 **Registrar o que rodou:** copie exatamente o que foi aplicado para
 `supabase/migrations/` com o próximo número livre (um arquivo por dia de
-aplicação: 0070, 0071…) e atualize a regra 5 do README de migrations — a
+aplicação: 0071, 0072…; a 0070 já é a Loja — o nome do arquivo daqui não
+vale como número) e atualize a regra 5 do README de migrations — a
 fila de gatilhos de `leads` passa a ser só t01 e t08.
 
 ### O que cada parte ganha e o risco

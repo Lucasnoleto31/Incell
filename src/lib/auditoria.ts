@@ -117,6 +117,17 @@ export const ROTULO_ACAO: Record<string, string> = {
   mudou_mensagem_padrao: "mudou uma mensagem pronta",
   excluiu_mensagem_padrao: "excluiu uma mensagem pronta",
   importou_contatos: "importou contatos",
+  // Loja (0070): ordens de serviço, estoque e vendas. O alvo (a OS, o item,
+  // a venda) vai nos detalhes.
+  criou_os: "abriu uma ordem de serviço",
+  mudou_os: "mudou uma ordem de serviço",
+  mudou_status_os: "mudou o status de uma ordem de serviço",
+  criou_item_estoque: "cadastrou um item no estoque",
+  mudou_item_estoque: "mudou um item do estoque",
+  movimentou_estoque: "lançou um movimento de estoque",
+  criou_venda: "registrou uma venda",
+  concluiu_venda: "concluiu uma venda",
+  cancelou_venda: "cancelou uma venda",
   excluiu_importacao: "excluiu uma importação do histórico",
 };
 
