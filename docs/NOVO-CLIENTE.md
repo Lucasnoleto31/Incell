@@ -205,7 +205,8 @@ Lidos no painel da Meta em 20/10/2026 (não são segredos):
 e o chat somava cinco ou seis em sequência. Enquanto o banco ficar lá, o
 `vercel.json` fixa a função em `pdx1` (Oregon), junto do banco: a pessoa paga
 uma travessia por página, e não uma por consulta. Ao mover o banco para
-São Paulo (seção 7), voltar o `vercel.json` para `gru1`.
+São Paulo, voltar o `vercel.json` para `gru1`. O passo a passo da mudança está
+em `docs/MUDAR-REGIAO.md`.
 
 Na estrutura nova da Meta (outubro de 2026) a antiga WABA virou duas contas: a
 **conta do WhatsApp** (o número; id `3185824368289167`) e a **conta de mensagens**
