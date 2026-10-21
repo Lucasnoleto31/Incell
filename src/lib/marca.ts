@@ -39,10 +39,18 @@ export const QUEM_ATENDE =
   process.env.NEXT_PUBLIC_QUEM_ATENDE?.trim() || "um assessor";
 
 /**
+ * Como se chama quem vende, no papel `vendedor` do sistema: "Assessor" na
+ * Zeve (corretora), "Vendedor" numa loja. O valor gravado no banco não muda.
+ */
+export const ROTULO_VENDEDOR =
+  process.env.NEXT_PUBLIC_ROTULO_VENDEDOR?.trim() || "Assessor";
+
+/**
  * O tema do cliente: o nome de uma pasta em public/temas/ com tema.css (os
  * tokens de cor dos dois temas, com a ficha do projeto no topo), logo.svg e
  * logo-escuro.svg (a marca por extenso, uma por tema), simbolo.svg (a barra
- * recolhida) e icone.svg (o favicon). Só letras minúsculas, dígitos e
+ * recolhida), icone.svg (o favicon) e icone-32.png e icone-180.png (o
+ * favicon do Safari e o ícone da tela de início do iPhone). Só letras minúsculas, dígitos e
  * hífen: vira caminho de URL e de arquivo. Em branco, não há tema.
  */
 export const TEMA = (() => {
@@ -58,6 +66,8 @@ export const ARQUIVOS_DO_TEMA = TEMA
       logoEscuro: `/temas/${TEMA}/logo-escuro.svg`,
       simbolo: `/temas/${TEMA}/simbolo.svg`,
       icone: `/temas/${TEMA}/icone.svg`,
+      icone32: `/temas/${TEMA}/icone-32.png`,
+      icone180: `/temas/${TEMA}/icone-180.png`,
     }
   : null;
 
