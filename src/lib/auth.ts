@@ -13,14 +13,14 @@ export type PerfilSessao = {
 /**
  * Id do usuário logado (claim `sub` do token), ou null.
  *
- * getClaims e não getUser: o middleware já chamou getUser neste mesmo
- * request (inclusive no POST de server action) e barrou sessão inválida ou
- * revogada — repetir aqui seria mais uma ida ao Supabase Auth por chamada.
+ * getClaims e não getUser: o middleware já conferiu a assinatura do token
+ * neste mesmo request (também por getClaims, desde 21/10/2026: a ida ao
+ * Supabase Auth em todo request custava ~300 ms na Incell) e barrou sessão
+ * inválida — repetir aqui seria mais uma ida ao Supabase Auth por chamada.
  * Com chave de assinatura assimétrica (o projeto publica uma ES256 no JWKS)
  * a assinatura é conferida localmente; com chave simétrica o próprio
- * getClaims cai no getUser. O único caso que a conferência local não vê —
- * sessão revogada com o token ainda no prazo — é justamente o que o getUser
- * do middleware pega antes de o request chegar aqui.
+ * getClaims cai no getUser. O único caso que a conferência local não vê é a
+ * sessão revogada com o token ainda no prazo: ela vale até o token vencer.
  *
  * cache() do React: layout, página e loaders do mesmo render dividem uma
  * única verificação. Server action não roda dentro de um render, então ali

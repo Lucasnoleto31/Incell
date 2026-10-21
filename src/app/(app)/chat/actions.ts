@@ -5,7 +5,6 @@ import {
   idDaSessao,
   perfilAtivo,
   perfilQueEscreve,
-  perfilAtual,
 } from "@/lib/auth";
 import { formatarData } from "@/lib/format";
 import { ehGestao } from "@/lib/papeis";
@@ -1859,7 +1858,7 @@ export async function historicoTemplatesLead(leadId: string): Promise<{
     em30Dias: 0,
     falhou: false,
   };
-  const perfil = await perfilAtual();
+  const perfil = await perfilAtivo();
   if (!perfil || !leadId) return { ...vazio, falhou: true };
   // Conversa que a pessoa não vê não tem número nenhum para mostrar.
   if (await acessoAoLead(leadId)) return { ...vazio, falhou: true };

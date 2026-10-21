@@ -2,7 +2,7 @@
 
 import Anthropic from "@anthropic-ai/sdk";
 import { createClient } from "@/lib/supabase/server";
-import { perfilAtual } from "@/lib/auth";
+import { perfilAtivo } from "@/lib/auth";
 import { podeVerLead } from "@/lib/privacidade";
 import { NOME_DA_EMPRESA, RAMO_DO_NEGOCIO } from "@/lib/marca";
 
@@ -85,7 +85,7 @@ Regras:
 export async function sugerirResposta(
   leadId: string,
 ): Promise<{ sugestao?: string; erro?: string }> {
-  const perfil = await perfilAtual();
+  const perfil = await perfilAtivo();
   if (!perfil) return { erro: "Sessão expirada. Entre de novo." };
 
   const ia = clienteIa();
@@ -183,7 +183,7 @@ Regras:
 export async function resumirConversa(
   leadId: string,
 ): Promise<{ resumo?: string; erro?: string }> {
-  const perfil = await perfilAtual();
+  const perfil = await perfilAtivo();
   if (!perfil) return { erro: "Sessão expirada. Entre de novo." };
 
   const ia = clienteIa();
@@ -269,7 +269,7 @@ Regras:
 export async function corrigirTexto(
   texto: string,
 ): Promise<{ corrigido?: string; erro?: string }> {
-  const perfil = await perfilAtual();
+  const perfil = await perfilAtivo();
   if (!perfil) return { erro: "Sessão expirada. Entre de novo." };
 
   const limpo = texto.trim();

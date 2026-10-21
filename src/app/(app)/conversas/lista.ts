@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { idDaSessao, perfilAtual, type PerfilSessao } from "@/lib/auth";
+import { idDaSessao, perfilAtivo, type PerfilSessao } from "@/lib/auth";
 import { cargaDaEquipe } from "@/lib/distribuicao";
 import { veioPeloDirect } from "@/lib/avatar";
 import { ehGestao } from "@/lib/papeis";
@@ -1561,7 +1561,7 @@ export async function carregarQuemSoLe(): Promise<string[] | null> {
 export async function carregarCargaEquipe(): Promise<
   { equipe: CargaAtendente[] } | { erro: string }
 > {
-  const perfil = await perfilAtual();
+  const perfil = await perfilAtivo();
   if (!perfil) return { erro: SESSAO_EXPIRADA };
   if (!ehGestao(perfil.papel)) {
     return { erro: "A carga da equipe é só para gestão." };

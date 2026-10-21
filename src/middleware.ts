@@ -17,7 +17,8 @@ function comCookies(destino: NextResponse, origem: NextResponse): NextResponse {
 
 /**
  * Renova o cookie de sessão a cada request, barra acesso às rotas internas
- * de quem não está autenticado e derruba sessão parada há mais de 24h.
+ * de quem não está autenticado e derruba sessão parada há mais de 24h. A
+ * sessão é conferida localmente (getClaims), sem ida ao Supabase.
  *
  * A expiração por inatividade vive AQUI, não no Supabase: o corte por
  * inatividade é recurso pago do painel, e o middleware já vê toda
@@ -56,9 +57,17 @@ export async function middleware(request: NextRequest) {
     },
   );
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // getClaims, e não getUser: o getUser é uma ida ao Supabase Auth em TODA
+  // requisição (página, prefetch, server action), e no projeto da Incell
+  // cada ida custa ~300 ms antes de a tela sequer começar. O getClaims
+  // confere a assinatura do token aqui mesmo (o projeto publica uma chave
+  // ES256 no JWKS, baixada uma vez por instância) e renova a sessão vencida
+  // pelos mesmos cookies. O que se perde: a sessão revogada em outro
+  // aparelho segue válida até o token vencer (uma hora, no padrão), em vez
+  // de cair no request seguinte. O corte por inatividade abaixo e a guarda
+  // de conta desativada (perfilAtivo nas actions) não dependem disso.
+  const { data: claims } = await supabase.auth.getClaims();
+  const user = claims?.claims.sub ? { id: claims.claims.sub } : null;
 
   const { pathname } = request.nextUrl;
 
@@ -162,29 +171,11 @@ export async function middleware(request: NextRequest) {
     );
   }
 
-  // Conta desativada. Desativar grava só profiles.ativo = false; a sessão
-  // continua válida e o RLS não olha essa coluna. As telas já mostram
-  // "Acesso desativado" (o layout), mas a aba aberta seguia chamando server
-  // action (mandar WhatsApp, disparar, ler conversas) e a rota de exportar
-  // a base. Aqui a conta inativa perde as duas coisas, seja qual for a
-  // guarda da action. Só nesses pedidos, para não pôr uma consulta a mais
-  // em toda página: action é POST com o cabeçalho Next-Action. A saída
-  // dessa pessoa é o ROTA_SAIR, liberado acima. Erro de rede na consulta
-  // deixa passar: a guarda da action (perfilAtivo) é a barreira de verdade.
-  const age = request.method === "POST" && request.headers.has("next-action");
-  if (age || pathname.startsWith("/api/exportar")) {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("ativo")
-      .eq("id", user.id)
-      .maybeSingle();
-    if (!error && !data?.ativo) {
-      return comCookies(
-        new NextResponse("Acesso desativado.", { status: 403 }),
-        response,
-      );
-    }
-  }
+  // Conta desativada: quem decide é a guarda de cada caminho (perfilAtivo
+  // nas server actions e nas rotas de exportação). Até 21/10/2026 o
+  // middleware ainda lia profiles.ativo em todo POST de action, uma ida a
+  // mais ao banco por clique; saiu quando as últimas actions que usavam
+  // perfilAtual passaram a perfilAtivo.
 
   return response;
 }
@@ -194,8 +185,8 @@ export const config = {
   // (src/app/icon.tsx, servido em /icon) e as pastas public/marca e
   // public/temas (a marca e os tokens do tema do cliente). Sem o ícone na exceção, as
   // telas de /entrar ficavam sem ícone (o pedido dele era desviado para o
-  // login) e, para quem está dentro, cada pedido do ícone passava pelo
-  // getUser. A exceção é por nome, nunca por extensão: pular .png ou .svg
+  // login) e, para quem está dentro, cada pedido do ícone passava pela
+  // conferência de sessão. A exceção é por nome, nunca por extensão: pular .png ou .svg
   // abria um desvio, porque /contatos/x.png casa com a rota /contatos/[id]
   // e chegava ao layout e às server actions sem passar pelos portões daqui.
   matcher: ["/((?!_next/static|_next/image|favicon.ico|icon$|marca/|temas/).*)"],
