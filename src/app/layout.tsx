@@ -19,6 +19,19 @@ export const metadata: Metadata = {
   title: NOME_DO_PRODUTO,
   description: `Caixa de entrada da equipe da ${NOME_DA_EMPRESA} para as conversas do WhatsApp e do Instagram Direct.`,
   applicationName: NOME_DO_PRODUTO,
+  // Com tema, além do /icon (SVG, para Chrome e Firefox), os PNG do tema:
+  // o Safari ignora favicon em SVG, e o iPhone usa o apple-touch-icon na
+  // tela de início.
+  ...(ARQUIVOS_DO_TEMA
+    ? {
+        icons: {
+          icon: [
+            { url: ARQUIVOS_DO_TEMA.icone32, sizes: "32x32", type: "image/png" },
+          ],
+          apple: [{ url: ARQUIVOS_DO_TEMA.icone180, sizes: "180x180" }],
+        },
+      }
+    : {}),
 };
 
 async function temaEscuro(): Promise<boolean> {

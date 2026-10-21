@@ -139,7 +139,7 @@ function PreviaArquivo({
         {previa.jaCliente ? (
           <LinhaInfo>
             <TextoLinha
-              titulo="Já são cliente da carteira"
+              titulo="Já são clientes"
               apoio="Com “Só telefones novos”, ficam de fora"
             />
             <ValorLinha>{numero(previa.jaCliente)}</ValorLinha>
@@ -370,7 +370,7 @@ export function ImportForm({
             {estado.jaEramClientes ? (
               <LinhaInfo>
                 <TextoLinha
-                  titulo="Já eram cliente da carteira"
+                  titulo="Já eram clientes"
                   apoio="Ficaram de fora"
                 />
                 <ValorLinha>{numero(estado.jaEramClientes)}</ValorLinha>

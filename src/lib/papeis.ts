@@ -1,6 +1,8 @@
 /**
  * Os cinco papéis de acesso. Arquivo puro (sem imports de servidor): o
- * menu, a tela de usuários e as actions leem daqui.
+ * menu, a tela de usuários e as actions leem daqui. O rótulo do vendedor
+ * vem do ambiente (src/lib/marca.ts): "Assessor" na Zeve, "Vendedor" numa
+ * loja.
  *
  * `vendedor` continua sendo o valor gravado no banco para o ASSESSOR — a
  * base inteira (policies, gates, distribuição) compara com esse literal e
@@ -10,6 +12,8 @@
  * Os detalhes descrevem o que cada papel vê no chat, e quem decide isso é o
  * RLS do banco (0067 e 0068), não a tela: mudar o texto não muda o acesso.
  */
+import { ROTULO_VENDEDOR } from "@/lib/marca";
+
 export const PAPEIS = [
   {
     papel: "atendente",
@@ -18,7 +22,7 @@ export const PAPEIS = [
   },
   {
     papel: "vendedor",
-    rotulo: "Assessor",
+    rotulo: ROTULO_VENDEDOR,
     detalhe: "as próprias conversas e as sem responsável",
   },
   {

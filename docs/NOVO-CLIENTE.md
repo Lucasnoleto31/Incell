@@ -21,6 +21,7 @@ Quatro variáveis `NEXT_PUBLIC_*`, embutidas no código na hora do build
 | `NEXT_PUBLIC_NOME_DO_PRODUTO` | Título das páginas, marca por extenso, e-mails, metadados do áudio | `<empresa> Atendimento` |
 | `NEXT_PUBLIC_RAMO_DO_NEGOCIO` | Sobre o que a IA do chat entende que a equipe conversa | `investimentos e abertura de conta em corretora` |
 | `NEXT_PUBLIC_QUEM_ATENDE` | Quem chama o lead de volta, na `/captura` ("um vendedor") | `um assessor` |
+| `NEXT_PUBLIC_ROTULO_VENDEDOR` | O nome do papel `vendedor` na equipe ("Vendedor") | `Assessor` |
 
 O Z da Zeve só aparece quando a empresa é a Zeve e não há tema. Sem tema,
 outra empresa usa o nome em texto e, no favicon e na barra recolhida, a
@@ -38,7 +39,8 @@ pela do cliente, sem mexer no código:
 | `logo.svg` | A marca por extenso para o tema claro (texto na tinta clara). |
 | `logo-escuro.svg` | A mesma marca para o tema escuro. Dois arquivos porque o SVG num `<img>` não herda a cor do texto. |
 | `simbolo.svg` | Só o símbolo, para a barra lateral recolhida. |
-| `icone.svg` | O favicon: fundo arredondado de 64×64 com o símbolo, e a `@media (prefers-color-scheme: dark)` para o fundo escuro. |
+| `icone.svg` | O favicon para Chrome e Firefox: ladrilho de 64×64 com o símbolo. Tem de ler a 16px: fundo cheio e símbolo grande, sem traço fino. |
+| `icone-32.png`, `icone-180.png` | O mesmo ícone em PNG: o Safari ignora favicon em SVG, e o iPhone usa o de 180 na tela de início. |
 
 Regras que valem em todo tema: a base (fundo, cartão, fio, botão principal)
 fica nos cinzas do sistema, e a cor da marca entra só nos detalhes, como o
@@ -187,6 +189,7 @@ Lucas).
 | `NEXT_PUBLIC_NOME_DO_PRODUTO` | em branco (`Incell Atendimento`) |
 | `NEXT_PUBLIC_RAMO_DO_NEGOCIO` | `iPhones, acessórios e assistência` |
 | `NEXT_PUBLIC_QUEM_ATENDE` | `um vendedor` |
+| `NEXT_PUBLIC_ROTULO_VENDEDOR` | `Vendedor` |
 | `NEXT_PUBLIC_TEMA` | `incell` (pasta `public/temas/incell/`) |
 
 Lidos no painel da Meta em 20/10/2026 (não são segredos):
