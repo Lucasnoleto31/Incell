@@ -115,12 +115,18 @@ export async function middleware(request: NextRequest) {
   const formularioPublico =
     pathname === "/captura" || pathname.startsWith("/captura/");
 
+  // A política de privacidade é para quem escreve à loja e para a Meta, que
+  // pede a URL dela no app antes de ligar o modo Ao vivo: quem chega não
+  // tem conta. Mesma regra da captura: só passa sem sessão.
+  const politicaPublica = pathname === "/privacidade";
+
   const rotaPublica =
     // A raiz só redireciona para o destino padrão; quem não está logado
     // segue dali para o /entrar com o retorno já certo.
     pathname === "/" ||
     pathname.startsWith("/entrar") ||
     formularioPublico ||
+    politicaPublica ||
     semPessoa;
 
   if (!user) {
