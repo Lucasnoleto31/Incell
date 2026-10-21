@@ -124,7 +124,11 @@ O guia completo, com os problemas comuns, é `docs/META-WHATSAPP.md`.
    com o token do System User, ou pelo próprio painel do WhatsApp ao
    configurar o webhook).
 7. **Modo Ao vivo**: a chave no topo do painel do app. Em desenvolvimento
-   a Meta só entrega mensagens de números de teste.
+   a Meta só entrega mensagens de números de teste. Antes de virar a chave,
+   App Settings › Basic pede a **URL da Política de Privacidade**: é a página
+   pública `/privacidade` do próprio sistema
+   (`https://<domínio do cliente>/privacidade`), que fala em nome do
+   cliente (CNPJ e cidade estão no texto; conferir antes de publicar).
 8. **Instância no sistema**: Administração › WhatsApp › novo número, com
    o nome do cliente e o `phone_number_id`. O atendente responsável, se
    houver, recebe os contatos novos; sem ele vale a distribuição
@@ -193,7 +197,20 @@ Lidos no painel da Meta em 20/10/2026 (não são segredos):
 | App | "InCell API", id `1127222199864648` (em desenvolvimento) |
 | WABA | "InCell", id `1792604091997574`, vai em `META_WABA_ID` |
 | Número | +55 62 9686-7445, `phone_number_id` `1414712241722483`, vai em `META_PHONE_NUMBER_ID` |
+| Usuário do sistema | `incellsistema`, id `61595478275620`, papel Funcionário (21/10/2026) |
 
-Faltavam: usuário do sistema e token permanente, App Secret na Vercel, webhook
-(precisa do endereço do deploy), modo Ao vivo e método de pagamento da WABA.
-Domínio e Supabase: a preencher quando a instalação fechar.
+Na estrutura nova da Meta (outubro de 2026) a antiga WABA virou duas contas: a
+**conta do WhatsApp** (o número; id `3185824368289167`) e a **conta de mensagens**
+(templates e pagamento; é a `1792604091997574` acima). O `incellsistema` tem acesso
+parcial aos três ativos: app InCell API (desenvolver app), conta do WhatsApp InCell
+(mensagens e números só para ver) e conta de mensagens InCell (templates só para
+ver). Como não é admin nem tem acesso total, a inscrição do app na WABA
+(`subscribed_apps`) se faz pelo painel do app, ao configurar o webhook, e não pelo
+token dele.
+
+Faltam: o token permanente (gerar em Usuários do sistema › `incellsistema` ›
+Gerar token, app InCell API, sem validade, com `whatsapp_business_messaging` e
+`whatsapp_business_management`, e colar direto em `META_WHATSAPP_TOKEN` na Vercel),
+App Secret na Vercel, webhook (precisa do endereço do deploy), modo Ao vivo e
+método de pagamento da conta de mensagens. Domínio e Supabase: a preencher quando
+a instalação fechar.
