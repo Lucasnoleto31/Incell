@@ -199,6 +199,14 @@ Lidos no painel da Meta em 20/10/2026 (não são segredos):
 | Número | +55 62 9686-7445, `phone_number_id` `1414712241722483`, vai em `META_PHONE_NUMBER_ID` |
 | Usuário do sistema | `incellsistema`, id `61595478275620`, papel Funcionário (21/10/2026) |
 
+**Região (21/10/2026):** o projeto do Supabase da Incell nasceu em
+**us-west-2 (Oregon)**, não em São Paulo (confirmado pelo IPv6 de
+`db.<ref>.supabase.co`). Cada ida ao banco a partir de `gru1` custava ~150 ms
+e o chat somava cinco ou seis em sequência. Enquanto o banco ficar lá, o
+`vercel.json` fixa a função em `pdx1` (Oregon), junto do banco: a pessoa paga
+uma travessia por página, e não uma por consulta. Ao mover o banco para
+São Paulo (seção 7), voltar o `vercel.json` para `gru1`.
+
 Na estrutura nova da Meta (outubro de 2026) a antiga WABA virou duas contas: a
 **conta do WhatsApp** (o número; id `3185824368289167`) e a **conta de mensagens**
 (templates e pagamento; é a `1792604091997574` acima). O `incellsistema` tem acesso
