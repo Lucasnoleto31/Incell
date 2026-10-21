@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { cookies } from "next/headers";
 import { Poppins } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { ARQUIVOS_DO_TEMA, NOME_DA_EMPRESA, NOME_DO_PRODUTO } from "@/lib/marca";
 
@@ -68,6 +69,10 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           aviso falso. Vale só para atributos deste elemento, nada além. */}
       <body suppressHydrationWarning className="flex min-h-full flex-col">
         {children}
+        {/* Métricas de velocidade da Vercel (Speed Insights): só tempos de
+            carregamento por rota, sem cookie e sem dado de quem usa. Só
+            manda alguma coisa quando roda na Vercel. */}
+        <SpeedInsights />
       </body>
     </html>
   );
